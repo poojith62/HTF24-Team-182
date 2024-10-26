@@ -1,0 +1,38 @@
+
+<!-- templates/wardrobe.html -->
+{% extends "base.html" %}
+{% block title %}My Wardrobe{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Wardrobe</h2>
+        <a href="{{ url_for('add_item') }}" class="btn btn-primary">Add New Item</a>
+    </div>
+
+    <div class="row g-4">
+        {% for item in items %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card clothing-card h-100">
+                <img src="{{ url_for('static', filename='uploads/' + item.image_path) }}" 
+                     class="card-img-top" alt="{{ item.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">
+                        <span class="badge bg-secondary">{{ item.category }}</span>
+                        <span class="badge bg-info">{{ item.color }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center">
+            <div class="py-5">
+                <h3>Your wardrobe is empty!</h3>
+                <p>Start by adding some clothing items.</p>
+                <a href="{{ url_for('add_item') }}" class="btn btn-primary">Add First Item</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
