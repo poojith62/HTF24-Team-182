@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+   
+    <!-- Recommended Outfits by Color Theory Section -->
+    {% if color_theory_outfits %}
+    <div class="mt-5">
+        <h3>Recommended Outfits by Color Theory</h3>
+        <p class="text-muted">These outfits are paired based on complementary color matching.</p>
+        
+        <div class="row">
+            {% for outfit in color_theory_outfits %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center">
+                            <!-- Top Image -->
+                            <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
+                                 class="img-thumbnail mb-2" alt="Top Image" style="width: 150px; height: auto;">
+                            <p class="card-text"><strong>Top:</strong> {{ outfit['top'].name }} - {{ outfit['top'].color }}</p>
+
+                            <!-- Bottom Image -->
+                            <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
+                                 class="img-thumbnail mb-2" alt="Bottom Image" style="width: 150px; height: auto;">
+                            <p class="card-text"><strong>Bottom:</strong> {{ outfit['bottom'].name }} - {{ outfit['bottom'].color }}</p>
+
+                            <!-- Shoe Image -->
+                            <img src="{{ url_for('static', filename='uploads/' + outfit['shoe'].image_path) }}"
+                                 class="img-thumbnail mb-2" alt="Shoe Image" style="width: 100px; height: auto;">
+                            <p class="card-text"><strong>Shoes:</strong> {{ outfit['shoe'].name }} - {{ outfit['shoe'].color }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No color-theory-based recommendations available at this time.</p>
+    {% endif %}
+
+    <h2>Regular Outfit Suggestions</h2>
+     <!-- Regular Outfits Section -->
+     <div class="row">
+        {% for outfit in outfits %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center">
+                        <!-- Top Image -->
+                        <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
+                             class="img-thumbnail mb-2" alt="Top Image" style="width: 150px; height: auto;">
+                        <p class="card-text"><strong>Top:</strong> {{ outfit['top'].name }} - {{ outfit['top'].color }}</p>
+
+                        <!-- Bottom Image -->
+                        <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
+                             class="img-thumbnail mb-2" alt="Bottom Image" style="width: 150px; height: auto;">
+                        <p class="card-text"><strong>Bottom:</strong> {{ outfit['bottom'].name }} - {{ outfit['bottom'].color }}</p>
+
+                        <!-- Shoe Image -->
+                        <img src="{{ url_for('static', filename='uploads/' + outfit['shoe'].image_path) }}"
+                             class="img-thumbnail mb-2" alt="Shoe Image" style="width: 100px; height: auto;">
+                        <p class="card-text"><strong>Shoes:</strong> {{ outfit['shoe'].name }} - {{ outfit['shoe'].color }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
