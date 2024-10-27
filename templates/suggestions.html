@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid py-5 bg-light">
+<div class="container-fluid py-5 bg-dark text-light">
     <!-- Hero Section -->
     <div class="container mb-5 text-center">
         <h1 class="display-4 mb-3">Your Personal Style Guide</h1>
-        <p class="lead text-muted mb-4">Discover perfectly coordinated outfits that match your style and personality</p>
+        <p class="lead text-white mb-4">Discover perfectly coordinated outfits that match your style and personality</p>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-0 shadow-sm mb-4">
+                <div class="card border-0 bg-secondary text-light shadow-sm mb-4">
                     <div class="card-body p-4">
-                        <h5 class="text-primary mb-3">Today's Style Tip</h5>
+                        <h5 class="text-white mb-3">Today's Style Tip</h5>
                         <p class="mb-0">Color coordination isn't just about matching—it's about creating harmony. Our suggestions use color theory principles to ensure each piece complements the others perfectly.</p>
                     </div>
                 </div>
@@ -24,18 +24,18 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h2 class="mb-3">Color-Coordinated Collections</h2>
-                <p class="lead text-muted mb-4">Discover how colors work together to create harmonious outfits</p>
+                <p class="lead text-white mb-4">Discover how colors work together to create harmonious outfits</p>
             </div>
         </div>
 
         <!-- Simplified Color Theory Carousel -->
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div id="colorTheoryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
                     <div class="carousel-inner">
                         {% for outfit in color_theory_outfits %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <div class="card border-0 shadow">
+                            <div class="card border-0 bg-secondary text-light shadow">
                                 <div class="card-header bg-primary bg-opacity-10">
                                     <h5 class="mb-0">Collection #{{ loop.index }}</h5>
                                 </div>
@@ -45,8 +45,8 @@
                                         <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
                                              class="rounded w-100"
                                              alt="Top Item"
-                                             style="height: 300px; object-fit: cover;">
-                                        <p class="mt-2 mb-0 text-muted">{{ outfit['top'].description }}</p>
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['top'].description }}</p>
                                     </div>
 
                                     <!-- Bottom Item -->
@@ -54,8 +54,8 @@
                                         <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
                                              class="rounded w-100"
                                              alt="Bottom Item"
-                                             style="height: 300px; object-fit: cover;">
-                                        <p class="mt-2 mb-0 text-muted">{{ outfit['bottom'].description }}</p>
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['bottom'].description }}</p>
                                     </div>
 
                                     <!-- Single Shoe Display -->
@@ -64,8 +64,8 @@
                                         <img src="{{ url_for('static', filename='uploads/' + outfit['shoes'][0].image_path) }}"
                                              class="rounded w-100"
                                              alt="Shoe"
-                                             style="height: 300px; object-fit: cover;">
-                                        <p class="mt-2 mb-0 text-muted">{{ outfit['shoes'][0].description }}</p>
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['shoes'][0].description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -88,12 +88,12 @@
     </div>
     {% endif %}
 
-    <!-- Classic Combinations Section -->
+        <!-- Classic Combinations Section -->
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h2 class="display-5 mb-3">Timeless Ensembles</h2>
-                <p class="lead text-muted mb-5">Classic combinations that stand the test of time</p>
+                <p class="lead text-white mb-5">Classic combinations that stand the test of time</p>
             </div>
         </div>
 
@@ -102,36 +102,36 @@
                 {% for outfit in outfits %}
                 <div class="carousel-item {% if loop.first %}active{% endif %}">
                     <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card border-0 shadow">
-                                <div class="card-header bg-secondary bg-opacity-10 border-0">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-secondary text-light shadow">
+                                <div class="card-header bg-dark bg-opacity-50 border-0">
                                     <h5 class="card-title mb-0">
                                         <i class="fas fa-star me-2"></i>Classic Collection #{{ loop.index }}
                                     </h5>
                                 </div>
-                                <div class="card-body p-4">
+                                <div class="card-body p-3">
                                     <!-- Top -->
-                                    <div class="outfit-item mb-4">
+                                    <div class="outfit-item mb-3">
                                         <div class="position-relative mb-2">
                                             <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
                                                  class="rounded-3 shadow-sm w-100"
                                                  alt="Top Item"
-                                                 style="height: 300px; object-fit: cover;">
+                                                 style="height: 120px; object-fit: cover;">
                                             <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Top</span>
                                         </div>
-                                        <small class="text-muted d-block">{{ outfit['top'].description }}</small>
+                                        <small class="text-light d-block">{{ outfit['top'].description }}</small>
                                     </div>
 
                                     <!-- Bottom -->
-                                    <div class="outfit-item mb-4">
+                                    <div class="outfit-item mb-3">
                                         <div class="position-relative mb-2">
                                             <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
                                                  class="rounded-3 shadow-sm w-100"
                                                  alt="Bottom Item"
-                                                 style="height: 300px; object-fit: cover;">
+                                                 style="height: 120px; object-fit: cover;">
                                             <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Bottom</span>
                                         </div>
-                                        <small class="text-muted d-block">{{ outfit['bottom'].description }}</small>
+                                        <small class="text-light d-block">{{ outfit['bottom'].description }}</small>
                                     </div>
 
                                     <!-- Shoes -->
@@ -140,17 +140,17 @@
                                             <img src="{{ url_for('static', filename='uploads/' + outfit['shoe'].image_path) }}"
                                                  class="rounded-3 shadow-sm w-100"
                                                  alt="Shoe Item"
-                                                 style="height: 300px; object-fit: cover;">
+                                                 style="height: 120px; object-fit: cover;">
                                             <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Shoes</span>
                                         </div>
-                                        <small class="text-muted d-block">{{ outfit['shoe'].description }}</small>
+                                        <small class="text-light d-block">{{ outfit['shoe'].description }}</small>
                                     </div>
                                 </div>
-                                <div class="card-footer bg-light border-0">
+                                <div class="card-footer bg-dark border-0">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">
+                                        <small class="text-light">
                                             <i class="fas fa-info-circle me-1"></i>
-                                            Swipe to explore more classic combinations
+                                            Swipe for more
                                         </small>
                                         <span class="badge bg-secondary">{{ loop.index }}/{{ outfits|length }}</span>
                                     </div>
@@ -162,11 +162,11 @@
                 {% endfor %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#classicOutfitsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                <span class="carousel-control-prev-icon bg-light rounded-circle" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#classicOutfitsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                <span class="carousel-control-next-icon bg-light rounded-circle" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
@@ -176,7 +176,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 bg-secondary text-light shadow-sm">
                     <div class="card-body p-4">
                         <h3 class="mb-4">Quick Style Tips</h3>
                         <div class="row g-4">
@@ -185,7 +185,7 @@
                                     <i class="fas fa-tshirt text-primary fs-4 me-3 mt-1"></i>
                                     <div>
                                         <h5>Color Coordination</h5>
-                                        <p class="text-muted">Build your outfit around one key piece and use complementary colors to create a cohesive look.</p>
+                                        <p class="text-light">Build your outfit around one key piece and use complementary colors to create a cohesive look.</p>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                                     <i class="fas fa-shoe-prints text-primary fs-4 me-3 mt-1"></i>
                                     <div>
                                         <h5>Footwear Focus</h5>
-                                        <p class="text-muted">Choose shoes that complement your outfit while providing appropriate comfort for your activities.</p>
+                                        <p class="text-light">Choose shoes that complement your outfit while providing appropriate comfort for your activities.</p>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
 
 <style>
     .carousel-item {
-        transition: transform .6s ease-in-out;
+        transition: transform .3s ease-in-out;
     }
 
     .outfit-item img {
@@ -222,7 +222,7 @@
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         padding: 2rem;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(255, 255, 255, 0.5);
     }
 
     .card {
@@ -239,7 +239,7 @@
         }
         
         .outfit-item img {
-            height: 200px !important;
+            height: 150px !important;
         }
     }
 </style>
@@ -311,83 +311,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Additional Style Tips Section -->
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body p-4">
-                    <h3 class="mb-4">Styling Guidelines</h3>
-                    <div class="accordion" id="stylingTips">
-                        <div class="accordion-item border-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#colorTheory">
-                                    Understanding Color Theory
-                                </button>
-                            </h2>
-                            <div id="colorTheory" class="accordion-collapse collapse show">
-                                <div class="accordion-body">
-                                    <p>Learn how colors work together to create harmonious outfits:</p>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">
-                                            <i class="fas fa-circle text-primary me-2"></i>
-                                            Complementary colors are opposite on the color wheel
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-circle text-success me-2"></i>
-                                            Analogous colors are next to each other
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-circle text-warning me-2"></i>
-                                            Neutral colors work with everything
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item border-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#proportions">
-                                    Mastering Proportions
-                                </button>
-                            </h2>
-                            <div id="proportions" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <p>Balance your outfit with these proportion tips:</p>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">
-                                            <i class="fas fa-ruler me-2"></i>
-                                            Pair loose with fitted pieces
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-compress-alt me-2"></i>
-                                            Consider your body shape
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-balance-scale me-2"></i>
-                                            Create visual balance
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="d-flex justify-content-center gap-3 mt-4">
-                <button class="btn btn-primary" onclick="window.print()">
-                    <i class="fas fa-print me-2"></i>Save Outfit Ideas
-                </button>
-                <button class="btn btn-outline-primary" onclick="shareOutfits()">
-                    <i class="fas fa-share-alt me-2"></i>Share
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 function shareOutfits() {
