@@ -96,16 +96,22 @@ COLOR_MAP = {
 }
 
 # Helper function for color complementary checking
+# Helper function for color complementary checking
 def is_complementary(color1, color2):
     complementary_pairs = {
-        'red': ['green', 'blue'],
-        'blue': ['orange', 'yellow'],
-        'yellow': ['purple', 'blue'],
-        'purple': ['yellow', 'green'],
-        'green': ['red', 'purple'],
-        'orange': ['blue', 'purple']
+        'black': ['white', 'gray'],  # Neutral, goes with most colors
+        'white': ['black', 'gray', 'blue', 'red'],  # Often paired with black or vibrant colors
+        'red': ['green', 'blue', 'gray'],  # Complements green and blue
+        'blue': ['orange', 'yellow', 'brown'],  # Complements orange, yellow, brown
+        'green': ['red', 'purple', 'brown'],  # Complements red and brown
+        'yellow': ['purple', 'blue', 'gray'],  # Complements purple, blue
+        'purple': ['yellow', 'green', 'orange'],  # Complements yellow and green
+        'orange': ['blue', 'purple', 'white'],  # Complements blue, purple, white
+        'brown': ['blue', 'green', 'gray'],  # Complements blue, green, and gray
+        'gray': ['black', 'white', 'red', 'yellow', 'blue'],  # Complements most colors, versatile
     }
     return color2 in complementary_pairs.get(color1, [])
+
 
 def extract_dominant_color(image_path):
     try:
@@ -360,43 +366,69 @@ def detect_item():
         flash('Error during item detection. Please try again.')
         return redirect(url_for('add_item'))
     
+
+
+
+
     
+from flask import render_template, flash
+from flask_login import login_required, current_user
+import random
+
+
+
 @app.route('/suggestions')
 @login_required
 def suggestions():
+    # Retrieve user's clothing items from the database based on category
     tops = ClothingItem.query.filter_by(user_id=current_user.id, category='top').all()
     bottoms = ClothingItem.query.filter_by(user_id=current_user.id, category='bottom').all()
     shoes = ClothingItem.query.filter_by(user_id=current_user.id, category='shoes').all()
 
+    # Check if there are enough items to create at least one complete outfit
     if not tops or not bottoms or not shoes:
         flash("Please add at least one top, one bottom, and one pair of shoes to get outfit suggestions.")
         return render_template('suggestions.html', outfits=[], color_theory_outfits=[])
 
+    # List to hold classic combinations (one top, one bottom, one shoe per outfit)
     outfits = []
-    color_theory_outfits = []
 
+    # Generate up to 5 unique outfits for the Classic Combinations section
     max_combinations = min(5, len(tops) * len(bottoms) * len(shoes))
-    for i in range(max_combinations):
-        top = tops[i % len(tops)]
-        bottom = bottoms[i % len(bottoms)]
-        shoe = shoes[i % len(shoes)]
+    for _ in range(max_combinations):
+        # Randomly select one top, one bottom, and one shoe for each outfit
+        top = random.choice(tops)
+        bottom = random.choice(bottoms)
+        shoe = random.choice(shoes)
+        
+        # Append the outfit as a dictionary for easier access in the template
         outfits.append({
             'top': top,
             'bottom': bottom,
             'shoe': shoe
         })
 
-    for top in tops:
-        for bottom in bottoms:
-            if is_complementary(top.color, bottom.color):
-                for shoe in shoes:
-                    color_theory_outfits.append({
-                        'top': top,
-                        'bottom': bottom,
-                        'shoe': shoe
-                    })
+    # Create color theory outfits for the "Color Combinations" section (optional section based on user needs)
+    color_theory_outfits = []
+    for _ in range(max_combinations):
+        top = random.choice(tops)
+        bottom = random.choice(bottoms)
+        selected_shoes = random.sample(shoes, min(3, len(shoes)))  # Select up to 3 shoes for variety
 
-    return render_template('suggestions.html', outfits=outfits, color_theory_outfits=color_theory_outfits)
+        # Append outfit with multiple shoes for the Color Theory section
+        color_theory_outfits.append({
+            'top': top,
+            'bottom': bottom,
+            'shoes': selected_shoes  # List of shoes for the carousel display
+        })
+
+    # Render the suggestions page with both classic and color theory outfits
+    return render_template(
+        'suggestions.html',
+        outfits=outfits,                # For Classic Combinations section
+        color_theory_outfits=color_theory_outfits  # For Color Theory Combinations section
+    )
+
 
 if __name__ == '__main__':
     app = create_app()
