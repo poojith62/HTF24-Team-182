@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block title %}Add Item{% endblock %}
+
+{% block content %}
+
+
+<div class="text-center mt-5">
+    <h1>Welcome to Your Virtual Wardrobe</h1>
+    <p class="lead">Elevate your style effortlessly by organizing and managing your wardrobe digitally.</p>
+</div>
+
+<div class="row mt-5 text-center">
+   
+
+    <br><br><br><hr>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">📷 Step 1: Snap a Photo</h3>
+                <p class="card-text">
+                    Get started by capturing a photo of your clothing item! Whether it’s a chic dress or a stylish accessory, simply snap a pic with your phone or upload one from your gallery.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">✨ Step 2: Upload with Ease</h3>
+                <p class="card-text">
+                    Hit the "Add Item" button to upload your photo. Our user-friendly interface makes it effortless to add new items—no complicated steps, just quick and easy uploading!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">🧠 Step 3: Let AI Work Its Magic</h3>
+                <p class="card-text">
+                    Watch as our advanced AI analyzes your photo! It identifies the type, color, and style of your item, categorizing it for you—no more manual tagging or sorting required!
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h2 class="mb-4">Add Items to Your Virtual Wardrobe in Just a Few Clicks!</h2>
+    <br><br>
+    
+</div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark text-light">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Add New Item</h4>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-info">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Form to upload image and detect item properties -->
+                    <form action="{{ url_for('detect_item') }}" method="POST" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label for="image" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control bg-dark text-light" id="image" name="image" accept="image/*" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Detect Item Properties</button>
+                        </div>
+                    </form>
+
+                    {% if filename %}
+                    <!-- Display detected properties after upload -->
+                    <hr>
+                    <h5>Detected Properties</h5>
+                    <form action="{{ url_for('add_item') }}" method="POST">
+                        <input type="hidden" id="filename" name="filename" value="{{ filename }}">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="img-fluid rounded mb-3" alt="Uploaded item">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Item Name</label>
+                                    <input type="text" class="form-control bg-dark text-light" id="name" name="name" 
+                                           value="{{ detected_name if detected_name else '' }}" 
+                                           placeholder="Enter item name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category (Detected)</label>
+                                    <select class="form-select bg-dark text-light" id="category" name="category" required>
+                                        <option value="" disabled>Select a category</option>
+                                        <option value="top" {% if detected_category == 'top' %}selected{% endif %}>Top</option>
+                                        <option value="bottom" {% if detected_category == 'bottom' %}selected{% endif %}>Bottom</option>
+                                        <option value="dress" {% if detected_category == 'dress' %}selected{% endif %}>Dress</option>
+                                        <option value="outerwear" {% if detected_category == 'outerwear' %}selected{% endif %}>Outerwear</option>
+                                        <option value="shoes" {% if detected_category == 'shoes' %}selected{% endif %}>Shoes</option>
+                                        <option value="other" {% if detected_category == 'other' %}selected{% endif %}>Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="color" class="form-label">Color (Detected)</label>
+                                    <select class="form-select bg-dark text-light" id="color" name="color" required>
+                                        <option value="" disabled>Select a color</option>
+                                        <option value="black" {% if detected_color == 'black' %}selected{% endif %}>Black</option>
+                                        <option value="white" {% if detected_color == 'white' %}selected{% endif %}>White</option>
+                                        <option value="red" {% if detected_color == 'red' %}selected{% endif %}>Red</option>
+                                        <option value="blue" {% if detected_color == 'blue' %}selected{% endif %}>Blue</option>
+                                        <option value="green" {% if detected_color == 'green' %}selected{% endif %}>Green</option>
+                                        <option value="yellow" {% if detected_color == 'yellow' %}selected{% endif %}>Yellow</option>
+                                        <option value="purple" {% if detected_color == 'purple' %}selected{% endif %}>Purple</option>
+                                        <option value="orange" {% if detected_color == 'orange' %}selected{% endif %}>Orange</option>
+                                        <option value="brown" {% if detected_color == 'brown' %}selected{% endif %}>Brown</option>
+                                        <option value="gray" {% if detected_color == 'gray' %}selected{% endif %}>Gray</option>
+                                        <option value="multicolor" {% if detected_color == 'multicolor' %}selected{% endif %}>Multicolor</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Confirm and Add Item</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+ 
+</div>
+
+<!-- Call to Action Section -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h2 class="mb-4">Ready to Transform Your Wardrobe?</h2>
+        <p class="lead mb-4">
+            Click the "Add Item" button now and experience the thrill of building your digital wardrobe! With just a few clicks, you’re on your way to effortless style and organization!
+        </p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-5 me-2">Get Started for Free</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-5">Login</a>
+        {% else %}
+            <a href="{{ url_for('wardrobe') }}" class="btn btn-success btn-lg px-5">View My Wardrobe</a>
+        {% endif %}
+    </div>
+</div>
+<br><br><br>
+</div>
+
+{% endblock %}

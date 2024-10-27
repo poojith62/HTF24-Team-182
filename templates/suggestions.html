@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-dark text-light">
+    <!-- Hero Section -->
+    <div class="container mb-5 text-center">
+        <h1 class="display-4 mb-3">Your Personal Style Guide</h1>
+        <p class="lead text-white mb-4">Discover perfectly coordinated outfits that match your style and personality</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 bg-secondary text-light shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="text-white mb-3">Today's Style Tip</h5>
+                        <p class="mb-0">Color coordination isn't just about matching—it's about creating harmony. Our suggestions use color theory principles to ensure each piece complements the others perfectly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Color Theory Outfits -->
+    {% if color_theory_outfits %}
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-3">Color-Coordinated Collections</h2>
+                <p class="lead text-white mb-4">Discover how colors work together to create harmonious outfits</p>
+            </div>
+        </div>
+
+        <!-- Simplified Color Theory Carousel -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div id="colorTheoryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+                    <div class="carousel-inner">
+                        {% for outfit in color_theory_outfits %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <div class="card border-0 bg-secondary text-light shadow">
+                                <div class="card-header bg-primary bg-opacity-10">
+                                    <h5 class="mb-0">Collection #{{ loop.index }}</h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <!-- Top Item -->
+                                    <div class="mb-4">
+                                        <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
+                                             class="rounded w-100"
+                                             alt="Top Item"
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['top'].description }}</p>
+                                    </div>
+
+                                    <!-- Bottom Item -->
+                                    <div class="mb-4">
+                                        <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
+                                             class="rounded w-100"
+                                             alt="Bottom Item"
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['bottom'].description }}</p>
+                                    </div>
+
+                                    <!-- Single Shoe Display -->
+                                    <div>
+                                        <h6 class="mb-3">Recommended Footwear</h6>
+                                        <img src="{{ url_for('static', filename='uploads/' + outfit['shoes'][0].image_path) }}"
+                                             class="rounded w-100"
+                                             alt="Shoe"
+                                             style="height: 150px; object-fit: cover;">
+                                        <p class="mt-2 mb-0 text-light">{{ outfit['shoes'][0].description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if color_theory_outfits|length > 1 %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#colorTheoryCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#colorTheoryCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+        <!-- Classic Combinations Section -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 mb-3">Timeless Ensembles</h2>
+                <p class="lead text-white mb-5">Classic combinations that stand the test of time</p>
+            </div>
+        </div>
+
+        <div id="classicOutfitsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for outfit in outfits %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-secondary text-light shadow">
+                                <div class="card-header bg-dark bg-opacity-50 border-0">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-star me-2"></i>Classic Collection #{{ loop.index }}
+                                    </h5>
+                                </div>
+                                <div class="card-body p-3">
+                                    <!-- Top -->
+                                    <div class="outfit-item mb-3">
+                                        <div class="position-relative mb-2">
+                                            <img src="{{ url_for('static', filename='uploads/' + outfit['top'].image_path) }}"
+                                                 class="rounded-3 shadow-sm w-100"
+                                                 alt="Top Item"
+                                                 style="height: 120px; object-fit: cover;">
+                                            <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Top</span>
+                                        </div>
+                                        <small class="text-light d-block">{{ outfit['top'].description }}</small>
+                                    </div>
+
+                                    <!-- Bottom -->
+                                    <div class="outfit-item mb-3">
+                                        <div class="position-relative mb-2">
+                                            <img src="{{ url_for('static', filename='uploads/' + outfit['bottom'].image_path) }}"
+                                                 class="rounded-3 shadow-sm w-100"
+                                                 alt="Bottom Item"
+                                                 style="height: 120px; object-fit: cover;">
+                                            <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Bottom</span>
+                                        </div>
+                                        <small class="text-light d-block">{{ outfit['bottom'].description }}</small>
+                                    </div>
+
+                                    <!-- Shoes -->
+                                    <div class="outfit-item">
+                                        <div class="position-relative mb-2">
+                                            <img src="{{ url_for('static', filename='uploads/' + outfit['shoe'].image_path) }}"
+                                                 class="rounded-3 shadow-sm w-100"
+                                                 alt="Shoe Item"
+                                                 style="height: 120px; object-fit: cover;">
+                                            <span class="position-absolute top-0 start-0 badge bg-secondary m-2">Shoes</span>
+                                        </div>
+                                        <small class="text-light d-block">{{ outfit['shoe'].description }}</small>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-dark border-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-light">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Swipe for more
+                                        </small>
+                                        <span class="badge bg-secondary">{{ loop.index }}/{{ outfits|length }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#classicOutfitsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-light rounded-circle" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#classicOutfitsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-light rounded-circle" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Style Guide Section -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 bg-secondary text-light shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Quick Style Tips</h3>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start">
+                                    <i class="fas fa-tshirt text-primary fs-4 me-3 mt-1"></i>
+                                    <div>
+                                        <h5>Color Coordination</h5>
+                                        <p class="text-light">Build your outfit around one key piece and use complementary colors to create a cohesive look.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start">
+                                    <i class="fas fa-shoe-prints text-primary fs-4 me-3 mt-1"></i>
+                                    <div>
+                                        <h5>Footwear Focus</h5>
+                                        <p class="text-light">Choose shoes that complement your outfit while providing appropriate comfort for your activities.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .carousel-item {
+        transition: transform .3s ease-in-out;
+    }
+
+    .outfit-item img {
+        transition: all 0.3s ease;
+    }
+
+    .outfit-item:hover img {
+        transform: scale(1.02);
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1rem !important;
+        }
+        
+        .outfit-item img {
+            height: 150px !important;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enable touch swiping for all carousels
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        let hammer = new Hammer(carousel);
+        
+        hammer.on('swipeleft', function() {
+            bootstrap.Carousel.getInstance(carousel).next();
+        });
+        
+        hammer.on('swiperight', function() {
+            bootstrap.Carousel.getInstance(carousel).prev();
+        });
+    });
+
+    // Progressive loading for images
+    document.querySelectorAll('img').forEach(img => {
+        img.loading = 'lazy';
+    });
+
+    // Add smooth transitions between slides
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        carousel.addEventListener('slide.bs.carousel', function (e) {
+            const activeItem = e.relatedTarget;
+            activeItem.style.display = 'block';
+            
+            setTimeout(() => {
+                activeItem.style.opacity = '1';
+            }, 50);
+        });
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+            document.querySelectorAll('.carousel-control-prev').forEach(btn => btn.click());
+        }
+        if (e.key === 'ArrowRight') {
+            document.querySelectorAll('.carousel-control-next').forEach(btn => btn.click());
+        }
+    });
+
+    // Add progress indicators
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        const items = carousel.querySelectorAll('.carousel-item');
+        const total = items.length;
+        let current = 1;
+
+        carousel.addEventListener('slide.bs.carousel', function (e) {
+            current = [...items].indexOf(e.relatedTarget) + 1;
+            updateProgress(carousel, current, total);
+        });
+
+        // Initial progress
+        updateProgress(carousel, current, total);
+    });
+
+    function updateProgress(carousel, current, total) {
+        const footer = carousel.querySelector('.card-footer .badge');
+        if (footer) {
+            footer.textContent = `${current}/${total}`;
+        }
+    }
+});
+</script>
+
+
+<script>
+function shareOutfits() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Outfit Combinations',
+            text: 'Check out these amazing outfit combinations!',
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        alert('Sharing is not supported on this browser.');
+    }
+}
+</script>
+{% endblock %}

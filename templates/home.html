@@ -1,0 +1,109 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row justify-content-center text-center">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold mb-4">Welcome to Your Virtual Wardrobe</h1>
+            <p class="lead mb-4">
+                Revolutionize your wardrobe organization with our easy-to-use digital wardrobe. Track and manage your clothes, receive outfit suggestions, and enjoy a wardrobe experience enhanced by AI.
+            </p>
+            {% if not current_user.is_authenticated %}
+                <div class="d-grid gap-2 d-md-block">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 me-md-2">Get Started</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+                </div>
+            {% else %}
+                <a href="{{ url_for('wardrobe') }}" class="btn btn-primary btn-lg px-5">View My Wardrobe</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Feature Highlights Section -->
+    <div class="row mt-5 text-center">
+        <h2 class="mb-4">Why Choose CHIC?</h2>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">📱 Digital Organization</h3>
+                    <p class="card-text">
+                        Store your entire wardrobe digitally. Simply snap a photo, upload, and organize. Our platform keeps your wardrobe at your fingertips, no matter where you are.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">🔍 AI-Powered Sorting</h3>
+                    <p class="card-text">
+                        Let our AI model detect whether an item is a shirt, pants, or accessory, saving you time and ensuring items are properly categorized. Perfect for wardrobe clarity!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">🎨 Visual Library</h3>
+                    <p class="card-text">
+                        Browse your entire wardrobe at a glance. Effortlessly find what you need and create stylish outfits with a simple, intuitive visual library of your clothes.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">👕 Effortless Item Management</h3>
+                    <p class="card-text">
+                        Add new items in seconds, categorize them, and even remove items as needed. Your digital wardrobe keeps everything organized, so you don’t have to.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">🌈 Personalized Outfit Suggestions</h3>
+                    <p class="card-text">
+                        Receive outfit recommendations based on complementary colors and your unique style preferences. Effortlessly put together stylish looks every day.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body py-4">
+                    <h3 class="card-title">🚀 Quick and User-Friendly</h3>
+                    <p class="card-text">
+                        Designed with simplicity in mind, Virtual Wardrobe makes managing your wardrobe a breeze. Enjoy a clean, clutter-free interface for a seamless experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Call to Action Section -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <h2 class="mb-4">Ready to Elevate Your Style?</h2>
+            <p class="lead mb-4">Join Virtual Wardrobe today and make getting dressed easier, faster, and more stylish. Whether you’re looking to streamline your closet or explore outfit inspiration, we’re here to help.</p>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-5 me-2">Get Started for Free</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-5">Login</a>
+            {% else %}
+                <a href="{{ url_for('wardrobe') }}" class="btn btn-success btn-lg px-5">View My Wardrobe</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

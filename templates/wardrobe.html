@@ -1,0 +1,144 @@
+<!-- templates/wardrobe.html -->
+{% extends "base.html" %}
+{% block title %}My Wardrobe{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <h1 class="fw-bold display-5 text-light">Welcome to Your Digital Wardrobe</h1>
+            <p class="lead text-white">
+                Manage your wardrobe with ease! Browse, filter, and organize all your clothing items in one place. 
+                With a quick overview of your wardrobe, making outfit decisions has never been easier.
+            </p>
+        </div>
+        <div class="col-lg-4 text-end align-self-center">
+            <a href="{{ url_for('add_item') }}" class="btn btn-primary btn-lg">Add New Item</a>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold mb-4 text-light">Filter Your Wardrobe</h5>
+                    <form action="{{ url_for('wardrobe') }}" method="get" class="row g-3 align-items-end">
+                        <!-- Category Filter -->
+                        <div class="col-md-4">
+                            <label class="form-label text-light">Category</label>
+                            <select name="category" class="form-select bg-dark text-light border-secondary" onchange="this.form.submit()">
+                                <option value="all" {% if current_category == 'all' %}selected{% endif %}>All Categories</option>
+                                <option value="top" {% if current_category == 'top' %}selected{% endif %}>Tops</option>
+                                <option value="bottom" {% if current_category == 'bottom' %}selected{% endif %}>Bottoms</option>
+                                <option value="dress" {% if current_category == 'dress' %}selected{% endif %}>Dresses</option>
+                                <option value="outerwear" {% if current_category == 'outerwear' %}selected{% endif %}>Outerwear</option>
+                                <option value="shoes" {% if current_category == 'shoes' %}selected{% endif %}>Shoes</option>
+                                <option value="other" {% if current_category == 'other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Color Filter -->
+                        <div class="col-md-4">
+                            <label class="form-label text-light">Color</label>
+                            <select name="color" class="form-select bg-dark text-light border-secondary" onchange="this.form.submit()">
+                                <option value="all" {% if current_color == 'all' %}selected{% endif %}>All Colors</option>
+                                {% for color in all_colors %}
+                                    <option value="{{ color }}" {% if current_color == color %}selected{% endif %}>
+                                        {{ color|title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Clear Filters Button -->
+                        <div class="col-md-4 text-end">
+                            <a href="{{ url_for('wardrobe') }}" class="btn btn-outline-light">Clear Filters</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wardrobe Categories and Items Section -->
+    {% set categories = [
+        ('top', 'Tops'), 
+        ('bottom', 'Bottoms'), 
+        ('dress', 'Dresses'), 
+        ('outerwear', 'Outerwear'), 
+        ('shoes', 'Shoes'), 
+        ('other', 'Other')
+    ] %}
+    
+    {% for category_id, category_name in categories %}
+        {% if categorized_items[category_id] %}
+            <div class="mb-5">
+                <!-- Category Title -->
+                <h3 class="fw-semibold text-light mb-4">{{ category_name }}</h3>
+                
+                <!-- Item Grid -->
+                <div class="row g-4">
+                    {% for item in categorized_items[category_id] %}
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 shadow-sm border-0 bg-dark">
+                                <div class="card-img-wrapper" style="height: 180px; overflow: hidden;">
+                                    <img src="{{ url_for('static', filename='uploads/' + item.image_path) }}" 
+                                         class="card-img-top h-100 w-100" 
+                                         style="object-fit: cover;" 
+                                         alt="{{ item.name }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-light">{{ item.name|title }}</h5>
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-secondary">{{ item.category|title }}</span>
+                                        <span class="badge rounded-circle" 
+                                              style="background-color: {{ item.color }}; 
+                                                     filter: saturate(50%);
+                                                     color: {% if item.color in ['white', 'yellow', 'beige', 'light blue', 'light green'] %}#333333{% else %}#ffffff{% endif %}; 
+                                                     width: 30px; 
+                                                     height: 30px; 
+                                                     display: inline-flex; 
+                                                     align-items: center; 
+                                                     justify-content: center;">
+                                            {{ item.color[0]|upper }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <!-- Empty Wardrobe Message -->
+    {% if not categorized_items.top and not categorized_items.bottom and 
+          not categorized_items.dress and not categorized_items.outerwear and 
+          not categorized_items.shoes and not categorized_items.other %}
+        <div class="text-center py-5">
+            <h3 class="text-light">Your wardrobe is empty!</h3>
+            <p class="text-muted">Start by adding some clothing items to get started on organizing your virtual wardrobe.</p>
+            <a href="{{ url_for('add_item') }}" class="btn btn-primary">Add First Item</a>
+        </div>
+    {% endif %}
+</div>
+   
+<style>
+    /* Card Styling */
+    .card {
+        transition: transform 0.2s;
+        box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    }
+    .badge {
+        font-size: 0.8rem;
+        padding: 0.5em 0.7em;
+    }
+</style>
+{% endblock %}
