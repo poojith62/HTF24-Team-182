@@ -2,6 +2,13 @@
 {% block title %}Add Item{% endblock %}
 
 {% block content %}
+
+
+<div class="text-center mt-5">
+    <h1>Welcome to Your Virtual Wardrobe</h1>
+    <p class="lead">Elevate your style effortlessly by organizing and managing your wardrobe digitally.</p>
+</div>
+<br><br><br>
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -86,5 +93,101 @@
             </div>
         </div>
     </div>
+
+
+
+ 
 </div>
+
+<br><br><br>
+<div class="row mt-5 text-center">
+    <h2 class="mb-4">Add Items to Your Virtual Wardrobe in Just a Few Clicks!</h2>
+    <br><br>
+
+    <br><br><br><hr>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">📷 Step 1: Snap a Photo</h3>
+                <p class="card-text">
+                    Get started by capturing a photo of your clothing item! Whether it’s a chic dress or a stylish accessory, simply snap a pic with your phone or upload one from your gallery.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">✨ Step 2: Upload with Ease</h3>
+                <p class="card-text">
+                    Hit the "Add Item" button to upload your photo. Our user-friendly interface makes it effortless to add new items—no complicated steps, just quick and easy uploading!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">🧠 Step 3: Let AI Work Its Magic</h3>
+                <p class="card-text">
+                    Watch as our advanced AI analyzes your photo! It identifies the type, color, and style of your item, categorizing it for you—no more manual tagging or sorting required!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">🎨 Step 4: Visualize Your Collection</h3>
+                <p class="card-text">
+                    Once added, your item appears in your digital wardrobe. Browse through your collection with ease and admire your unique style, all organized at your fingertips!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">🌟 Step 5: Create Stunning Outfits</h3>
+                <p class="card-text">
+                    Use our color-coordination feature to mix and match items effortlessly! Our AI suggests outfits based on your uploaded items, helping you look fabulous every day!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h3 class="card-title">🎉 Step 6: Enjoy Your Stylish Wardrobe!</h3>
+                <p class="card-text">
+                    With your digital wardrobe ready, getting dressed becomes fun and easy! Embrace your style and get ready to turn heads with stunning outfit combinations!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<!-- Call to Action Section -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h2 class="mb-4">Ready to Transform Your Wardrobe?</h2>
+        <p class="lead mb-4">
+            Click the "Add Item" button now and experience the thrill of building your digital wardrobe! With just a few clicks, you’re on your way to effortless style and organization!
+        </p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-5 me-2">Get Started for Free</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-5">Login</a>
+        {% else %}
+            <a href="{{ url_for('wardrobe') }}" class="btn btn-success btn-lg px-5">View My Wardrobe</a>
+        {% endif %}
+    </div>
+</div>
+<br><br><br>
+</div>
+
 {% endblock %}
